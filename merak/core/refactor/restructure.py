@@ -23,6 +23,7 @@ import pathlib
 import re
 import shutil
 import threading
+import os
 
 from merak.core import base
 from merak.core import errors
@@ -294,7 +295,7 @@ class ModuleIndex(base.MerakBase):
     # mod: ("mod", "path", "in", "tuple") -> fullpath
     # data: {data fullpath}
     mod, data = {}, set()
-    for r, _, fs in self._root.walk():
+    for r, _, fs in os.walk(self._root): #.walk():
       for f in fs:
         path = r.joinpath(f)
         if path.suffix in self._exts:
