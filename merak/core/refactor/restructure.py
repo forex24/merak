@@ -18,6 +18,7 @@ from __future__ import print_function
 
 import ast
 import collections
+import glob
 import io
 import pathlib
 import re
@@ -295,7 +296,7 @@ class ModuleIndex(base.MerakBase):
     # mod: ("mod", "path", "in", "tuple") -> fullpath
     # data: {data fullpath}
     mod, data = {}, set()
-    for r, _, fs in os.walk(self._root): #.walk():
+    for r, _, fs in glob.glob(self._root): #.walk():
       for f in fs:
         path = r.joinpath(f)
         if path.suffix in self._exts:
