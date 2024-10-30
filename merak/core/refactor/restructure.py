@@ -18,13 +18,11 @@ from __future__ import print_function
 
 import ast
 import collections
-import glob
 import io
 import pathlib
 import re
 import shutil
 import threading
-import os
 
 from merak.core import base
 from merak.core import errors
@@ -296,13 +294,12 @@ class ModuleIndex(base.MerakBase):
     # mod: ("mod", "path", "in", "tuple") -> fullpath
     # data: {data fullpath}
     mod, data = {}, set()
-    for r, _, fs in glob.glob(self._root): #.walk():
-      for f in fs:
-        path = r.joinpath(f)
-        if path.suffix in self._exts:
-          mod[self.to_module(path)] = path
-        else:
-          data.add(path)
+    for path in self._root.rglob('*'):
+        if path.is_file():
+            if path.suffix in self._exts:
+                mod[self.to_module(path)] = path
+            else:
+                data.add(path)
     return {"mod": mod, "data": data}
 
   def to_module(self, file):
