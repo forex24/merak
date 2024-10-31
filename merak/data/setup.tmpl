@@ -29,4 +29,4 @@ setuptools.setup(
     ext_modules=cythonize(setuptools.Extension(
         name="%s.__init__" % PACKAGE_NAME,
         sources=get_source_files(PACKAGE_NAME)),
-    compiler_directives={{ "language_level": "3", "always_allow_keywords": True }}))
+    compiler_directives={{ "language_level": "3", "always_allow_keywords": True, 'boundscheck': False,'wraparound': True, 'cdivision': True, 'profile': False, 'linetrace': False }}))
